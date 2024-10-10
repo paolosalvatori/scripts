@@ -47,13 +47,14 @@ helm install nginx-ingress ingress-nginx/ingress-nginx \
   --set controller.metrics.serviceMonitor.enabled=true \
   --set controller.metrics.serviceMonitor.additionalLabels.release="prometheus" \
   --set controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-health-probe-request-path"=/healthz \
+  --set controller.config.enable-modsecurity=true \
+  --set controller.config.enable-owasp-modsecurity-crs=true \
   --set controller.config.modsecurity-snippet=\
 'SecRuleEngine On
 SecRequestBodyAccess On
 SecAuditLog /dev/stdout
 SecAuditLogFormat JSON
-SecAuditEngine RelevantOnly
-SecRule REMOTE_ADDR "@ipMatch 127.0.0.1" "id:87,phase:1,pass,nolog,ctl:ruleEngine=Off"'
+SecAuditEngine RelevantOnly'
 
 # Install certificate manager
 helm install cert-manager jetstack/cert-manager \

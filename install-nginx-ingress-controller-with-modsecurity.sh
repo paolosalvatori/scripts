@@ -53,13 +53,14 @@ SecRequestBodyAccess On
 SecAuditLog /dev/stdout
 SecAuditLogFormat JSON
 SecAuditEngine RelevantOnly
-SecRule REMOTE_ADDR "@ipMatch 127.0.0.1" "id:87,phase:1,pass,nolog,ctl:ruleEngine=Off"' \
+SecRule REMOTE_ADDR "@ipMatch 127.0.0.1" "id:87,phase:1,pass,nolog,ctl:ruleEngine=Off"'
 
 # Install certificate manager
 helm install cert-manager jetstack/cert-manager \
   --create-namespace \
   --namespace cert-manager \
-  --set installCRDs=true \
+  --set crds.enabled=true \
+  --set prometheus.enabled=true \
   --set nodeSelector."kubernetes\.io/os"=linux
 
 # Create cluster issuer

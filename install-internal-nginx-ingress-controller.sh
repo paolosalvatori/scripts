@@ -53,7 +53,8 @@ helm install nginx-ingress ingress-nginx/ingress-nginx \
 helm install cert-manager jetstack/cert-manager \
   --create-namespace \
   --namespace cert-manager \
-  --set installCRDs=true \
+  --set crds.enabled=true \
+  --set prometheus.enabled=true \
   --set nodeSelector."kubernetes\.io/os"=linux
 
 # Create cluster issuer
